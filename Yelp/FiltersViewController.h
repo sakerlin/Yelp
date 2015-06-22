@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Filters;
 @class FiltersViewController;
 @protocol FiltersViewControllerDelegate <NSObject>
 
 - (void)filtersViewController:(FiltersViewController *)
-    filtersViewController didChangeFilters:(NSDictionary *)filters;
+    filtersViewController didChangeFilters:(Filters *)filters;
 @end
 
 @interface FiltersViewController : UIViewController

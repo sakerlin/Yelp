@@ -16,7 +16,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="UyN-XB-ch2" customClass="Filter">
-                    <rect key="frame" x="8" y="0.0" width="367" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
             </subviews>
@@ -24,7 +24,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="UyN-XB-ch2" secondAttribute="bottom" id="8UB-tn-z2p"/>
                 <constraint firstItem="UyN-XB-ch2" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="H6o-bq-uBi"/>
-                <constraint firstItem="UyN-XB-ch2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="KXf-OA-f4j"/>
+                <constraint firstItem="UyN-XB-ch2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="KXf-OA-f4j"/>
                 <constraint firstAttribute="trailing" secondItem="UyN-XB-ch2" secondAttribute="trailing" id="Qji-iI-0Ac"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>

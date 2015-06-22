@@ -10,7 +10,7 @@
 @interface SwitchCell ()
 
 
-@property (weak, nonatomic) IBOutlet UISwitch *toggleSwitch;
+ 
 - (IBAction)swithValueChanged:(id)sender;
 
 @end

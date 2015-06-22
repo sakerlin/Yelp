@@ -37,7 +37,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="titleLabel" destination="R6D-We-AXp" id="8SC-fp-LGe"/>
-                <outlet property="toggleSwitch" destination="RuX-DO-jr6" id="cjU-dZ-sem"/>
+                <outlet property="toggleSwitch" destination="RuX-DO-jr6" id="ggt-5E-rQh"/>
             </connections>
             <point key="canvasLocation" x="564" y="481"/>
         </tableViewCell>

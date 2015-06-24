@@ -28,22 +28,7 @@
         self.ratingImageUrl = dictionary[@"rating_img_url"];
         float milesPerMeter = 0.000621371;
         self.distance = [dictionary[@"distance"] integerValue] * milesPerMeter;
-        /*
-        NSArray *addressEntries = [dictionary valueForKeyPath:@"location.address"];
-        NSString *street;
-        if (addressEntries.count) {
-            street = addressEntries[0];
-        } else { // just display city
-            street = [dictionary valueForKeyPath:@"location.city"];
-        }
-        NSString *neighborhood = [dictionary valueForKeyPath:@"location.neighborhoods"][0];
-        if (neighborhood) { // not all entries have a neighborhood
-            self.address = [NSString stringWithFormat:@"%@, %@", street, neighborhood];
-            
-        } else {
-            self.address = [NSString stringWithFormat:@"%@", street];
-        }
-        */
+       
        
     }
     return self;

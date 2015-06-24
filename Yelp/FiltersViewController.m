@@ -44,7 +44,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    UIColor *naviColor = [UIColor
+                          colorWithRed:0.73
+                          green:0.05
+                          blue:0.01
+                          alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = naviColor;
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                              style:UIBarButtonItemStylePlain
@@ -54,7 +59,8 @@
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(onApplyButton)];
-    
+    self.navigationItem.leftBarButtonItem.tintColor= [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem.tintColor= [UIColor whiteColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"FiltersCell"];
@@ -66,7 +72,20 @@
     // Dispose of any resources that can be recreated.
 }
 #pragma  mark - tableview data source
-
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+     return 40;
+}
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    // Background color
+    view.tintColor = [UIColor redColor];
+    
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor whiteColor]];
+    
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     switch (section) {
@@ -77,7 +96,7 @@
         case 2:
             return 1;
         case 3:
-            return [self isExpandSection:section] ? self.filters.categories.count : 6;
+            return [self isExpandSection:section] ? self.filters.category.count : 6;
             
         default:
             return 1;
@@ -129,6 +148,7 @@
         case 2: {
             cell.textLabel.text = @"Offering Deals";
             cell.accessoryView = self.mySwitch;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
         case 3: {
@@ -139,8 +159,8 @@
             }
             NSUInteger categoryRow = (NSUInteger) row;
             
-            cell.textLabel.text = self.filters.categories[categoryRow][@"key"];
-            if ([self.filters.setCategories containsObject:self.filters.categories[categoryRow]]) {
+            cell.textLabel.text = self.filters.category[categoryRow][@"key"];
+            if ([self.filters.setCategories containsObject:self.filters.category[categoryRow]]) {
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
             }
             return cell;
@@ -172,7 +192,7 @@
             // select switch instead
             break;
         case 3:
-            if (![self isExpandSection:section] && row == 3) {
+            if (![self isExpandSection:section] && row == 5) {
                 [self expandSection:section];
             } else {
                 NSUInteger category = (NSUInteger) row;
@@ -234,11 +254,11 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
     // check if already selected
-    if ([self.filters.setCategories containsObject:self.filters.categories[categoryIndex]]) {  // already selected -> remove it.
-        [self.filters.setCategories removeObject:self.filters.categories[categoryIndex]];
+    if ([self.filters.setCategories containsObject:self.filters.category[categoryIndex]]) {  // already selected -> remove it.
+        [self.filters.setCategories removeObject:self.filters.category[categoryIndex]];
         cell.accessoryType = UITableViewCellAccessoryNone;
     } else {
-        [self.filters.setCategories addObject:self.filters.categories[categoryIndex]]; // add it
+        [self.filters.setCategories addObject:self.filters.category[categoryIndex]]; // add it
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
 }

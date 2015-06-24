@@ -23,6 +23,8 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 @property (nonatomic, strong) YelpClient *client;
 @property(atomic, strong) NSArray *businesses;
 @property(nonatomic, strong) UISearchBar *searchBar;
+@property(nonatomic, strong) NSString *queryTerm;
+@property(nonatomic, strong) UIColor *naviColor;
 - (void)fetchBusinessWithQuery:(NSString *)query params:(NSDictionary *)params;
 @end
 
@@ -30,13 +32,19 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.queryTerm = @"Pizza";
     self.client = [[YelpClient alloc] initWithConsumerKey:kYelpConsumerKey
                                            consumerSecret:kYelpConsumerSecret
                                               accessToken:kYelpToken
                                              accessSecret:kYelpTokenSecret];
     
-    [self fetchBusinessWithQuery:@"Restaurants" params:nil];
-   
+    [self fetchBusinessWithQuery: self.queryTerm params:nil];
+    UIColor *naviColor = [UIColor
+                 colorWithRed:0.73
+                 green:0.05
+                 blue:0.01
+                 alpha:1.0];
+   self.navigationController.navigationBar.barTintColor = naviColor;
     
     // cell registration
     [self.tableView registerNib:[UINib nibWithNibName:@"BusinessCell" bundle:nil] forCellReuseIdentifier:@"BusinessCell"];
@@ -48,17 +56,18 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Filters"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
-                                                                            action:@selector(onFiltersButton)];;
+                                                                            action:@selector(onFiltersButton)];
+    self.navigationItem.leftBarButtonItem.tintColor= [UIColor whiteColor];
     // add search bar to navigation bar
     self.searchBar = [[UISearchBar alloc] init];
     self.navigationItem.titleView = self.searchBar;
     [self.searchBar setShowsCancelButton:YES animated:YES];
-    self.searchBar.text = @"牛肉麵";
-    
+    self.searchBar.text = self.queryTerm;
+    [self.searchBar setShowsCancelButton:NO animated:YES];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.searchBar.delegate = self;
-  
+    
 }
 #pragma mark - Table View Data source methods
 
@@ -76,23 +85,34 @@ NSString * const kYelpTokenSecret = @"mqtKIxMIR4iBtBPZCmCLEb-Dz3Y";
 - (void)filtersViewController:(FiltersViewController *)filtersViewController
              didChangeFilters:(Filters *)filters {
     NSDictionary *params = filters.setParams;
-    [self fetchBusinessWithQuery:@"Restaurants" params:params];
+    [self fetchBusinessWithQuery:self.queryTerm params:params];
 
     //NSLog(@"Fire a new network event: %@", params);
     
 }
 #pragma mark - Search bar delegate methods
-
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [searchBar sizeToFit];
+    [searchBar setShowsCancelButton:YES animated:YES];
+    return YES;
+}
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
    [searchBar resignFirstResponder]; // hide keyboard
+    self.queryTerm = searchBar.text;
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+    [self.view endEditing:YES];
     
     [self fetchBusinessWithQuery:self.searchBar.text params:nil];
     
 }
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-    [searchBar resignFirstResponder]; // hide keyboard
-   
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [searchBar resignFirstResponder];
+    [self.view endEditing:YES];
+    searchBar.text = self.queryTerm;
+    [searchBar sizeToFit];
 }
 
 #pragma mark - Private methods

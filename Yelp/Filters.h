@@ -12,7 +12,7 @@
 
 @property(nonatomic, copy) NSString *searchTerm;
 @property(nonatomic, strong) NSArray *filterSections;
-@property(nonatomic, strong) NSArray *categories;
+@property(nonatomic, strong) NSArray *category;
 @property(nonatomic, strong) NSArray *sortBy;
 @property(nonatomic, strong) NSArray *distances;
 @property(nonatomic, strong) NSDictionary *setParams;
